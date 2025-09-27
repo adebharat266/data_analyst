@@ -3,6 +3,7 @@ import pandas as pd
 from pandasai.llm.base import LLM
 from pandasai import SmartDataframe
 from groq import Groq
+import streamlit as st
 
 # ----------------------------
 # LLM Class (Groq + PandasAI)
@@ -141,7 +142,8 @@ if uploaded_file:
     st.dataframe(df.head(10))  # preview first 10 rows
 
     # Init LLM + SmartDataframe
-    llm = GroqLLM(api_key="your-groq-api-key")
+    #llm = GroqLLM(api_key="your-groq-api-key")
+    llm = GroqLLM(api_key=st.secrets["GROQ_API_KEY"])
     sdf = SmartDataframe(df, config={"llm": llm})
 
     # --- Ask Questions ---
@@ -162,3 +164,4 @@ if uploaded_file:
                     except Exception as e:
                         st.error(f"⚠️ Error: {e}")
         st.markdown("</div>", unsafe_allow_html=True)
+
